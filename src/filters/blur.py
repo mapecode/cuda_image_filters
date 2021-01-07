@@ -17,8 +17,11 @@ BLUE = 2
 CUDA_APPLY_KERNEL = 'cuda/apply_kernel.cu'
 
 
-def apply_blur(img_array, kernel):
+def apply_color(img_array, kernel):
     result_img_array = np.empty_like(img_array)
+
+    if len(img_array.shape) != 3:
+        raise ValueError('Error, the image must be in RGB')
 
     rgb_channels = [
         img_array[:, :, RED].copy(),
@@ -33,7 +36,7 @@ def apply_blur(img_array, kernel):
 
     if (dim_grid_x * dim_grid_y) > MAX_NUM_BLOCKS:
         raise ValueError(
-            'image dimensions too great, maximum block number exceeded')
+            'Error, maximum block number exceeded')
     else:
         apply_filter = SourceModule(
             open(CUDA_APPLY_KERNEL).read()).get_function('apply_kernel')
