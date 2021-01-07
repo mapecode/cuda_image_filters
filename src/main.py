@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import PIL.Image
 from argparse import ArgumentParser
@@ -31,11 +32,12 @@ if __name__ == '__main__':
     if(args.b):
         try:
             img_array = np.array(PIL.Image.open(args.image_src))
+            kernel = np.load('./exec/kernel.npy')
+
         except FileNotFoundError as e:
             print('File Not Found')
             sys.exit(e)
 
-        kernel = create_gaussian_kernel()
-        result_img_array = blur.apply_blur(img_array, kernel)
+        result_img_array = blur.apply_color(img_array, kernel)
 
         PIL.Image.fromarray(result_img_array).save('result.png')

@@ -15,9 +15,9 @@ dirs:
 format:
 	autopep8 --in-place --aggressive --aggressive --recursive src/*
 
-blur: clean dirs
-	cp $(img) $(DIREXE)	
-	$(RUN) $(DIREXE)src/main.py  $(options) $(img)
+kernel: dirs
+	$(RUN) $(DIREXE)src/create_kernel.py --gaussian
 
-sobel_sol:
-	./$(DIREXE)sobel
+blur: dirs
+	cp $(img) $(DIREXE)	
+	$(RUN) $(DIREXE)src/main.py  -b $(img)
