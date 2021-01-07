@@ -10,14 +10,13 @@ clean:
 dirs:
 	mkdir -p $(DIREXE)	
 	cp -r src/ $(DIREXE)
-	cp -r cuda/ $(DIREXE)
 
 format:
 	autopep8 --in-place --aggressive --aggressive --recursive src/*
 
-kernel: dirs
+gaussian_kernel:
 	$(RUN) $(DIREXE)src/create_kernel.py --gaussian
 
-blur: dirs
+gaussian: dirs gaussian_kernel
 	cp $(img) $(DIREXE)	
-	$(RUN) $(DIREXE)src/main.py  -b $(img)
+	$(RUN) $(DIREXE)src/main.py --gaussian $(img)

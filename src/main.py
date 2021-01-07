@@ -4,6 +4,7 @@ import PIL.Image
 from argparse import ArgumentParser
 from filters import blur
 from utils import create_gaussian_kernel
+from constants import KERNEL_FILE, RESULT_FILE
 
 
 def parse_args():
@@ -13,13 +14,9 @@ def parse_args():
     filter_group = parser.add_mutually_exclusive_group(required=True)
 
     filter_group.add_argument(
-        '-g',
-        help='grayscale filter',
-        action='store_true'
-    )
     filter_group.add_argument(
-        '-b',
-        help='blur filter',
+        '--gaussian',
+        help='gaussian blur filter',
         action='store_true'
     )
 
@@ -27,17 +24,17 @@ def parse_args():
 
 
 if __name__ == '__main__':
-    args = parse_args()
+    args=parse_args()
 
-    if(args.b):
+    if(args.gaussian):
         try:
-            img_array = np.array(PIL.Image.open(args.image_src))
-            kernel = np.load('./exec/kernel.npy')
+            img_array=np.array(PIL.Image.open(args.image_src))
+            kernel=np.load(KERNEL_FILE)
 
         except FileNotFoundError as e:
             print('File Not Found')
             sys.exit(e)
 
-        result_img_array = blur.apply_color(img_array, kernel)
+        result_img_array=blur.apply_color(img_array, kernel)
 
-        PIL.Image.fromarray(result_img_array).save('result.png')
+        PIL.Image.fromarray(result_img_array).save(RESULT_FILE)

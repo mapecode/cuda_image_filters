@@ -3,18 +3,7 @@ import math
 import pycuda.autoinit
 from pycuda import driver
 from pycuda.compiler import SourceModule
-
-DIM_BLOCK = 32
-MAX_GRID_DIM_X = driver.device_attribute.MAX_GRID_DIM_X
-MAX_GRID_DIM_Y = driver.device_attribute.MAX_GRID_DIM_Y
-MAX_NUM_BLOCKS = pycuda.autoinit.device.get_attribute(
-    MAX_GRID_DIM_X) * pycuda.autoinit.device.get_attribute(MAX_GRID_DIM_Y)
-
-RED = 0
-GREEN = 1
-BLUE = 2
-
-CUDA_APPLY_KERNEL = 'cuda/apply_kernel.cu'
+from constants import *
 
 
 def apply_color(img_array, kernel):
