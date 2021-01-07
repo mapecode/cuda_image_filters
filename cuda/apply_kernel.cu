@@ -1,10 +1,9 @@
-__global__ void apply_kernel(const unsigned char *input_channel, unsigned char *output_channel,
-                             const unsigned int width, const unsigned int height,
-                             const float *kernel, const unsigned int filter_width) {
-    
+__global__ void apply_kernel(const unsigned char *input_channel, unsigned char *output_channel, 
+    const unsigned int width, const unsigned int height, const float *kernel, const unsigned int filter_width) {
     
     const unsigned int row = threadIdx.y + blockIdx.y * blockDim.y;
     const unsigned int col = threadIdx.x + blockIdx.x * blockDim.x;
+
     if(row < height && col < width) {
         const int filter_half = filter_width / 2;
         float result = 0.0;
