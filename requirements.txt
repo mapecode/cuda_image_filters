@@ -1,0 +1,4 @@
+pycuda
+opencv-python
+Pillow
+argparse
