@@ -15,7 +15,7 @@ format:
 	autopep8 --in-place --aggressive --aggressive --recursive src/*
 
 gaussian_kernel:
-	$(RUN) $(DIREXE)src/create_kernel.py --gaussian
+	$(RUN) $(DIREXE)src/create_kernel.py
 
 gaussian: dirs gaussian_kernel
 	cp $(img) $(DIREXE)	

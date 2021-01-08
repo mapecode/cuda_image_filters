@@ -5,17 +5,18 @@ from pycuda import driver
 from pycuda.compiler import SourceModule
 from constants import *
 
+apply_filter = SourceModule(
+    open(CUDA_GAUSSIAN).read()).get_function(CUDA_GAUSSIAN_FUNCTION)
 
-def apply_color(img_array, kernel):
-    result_img_array = np.empty_like(img_array)
 
+def apply(img_array, kernel):
     if len(img_array.shape) != 3:
         raise ValueError('Error, the image must be in RGB')
 
     rgb_channels = [
-        img_array[:, :, RED].copy(),
-        img_array[:, :, GREEN].copy(),
-        img_array[:, :, BLUE].copy(),
+        img_array[:, :, 0].copy(),
+        img_array[:, :, 1].copy(),
+        img_array[:, :, 2].copy(),
     ]
 
     height, width = img_array.shape[:2]
@@ -27,8 +28,6 @@ def apply_color(img_array, kernel):
         raise ValueError(
             'Error, maximum block number exceeded')
     else:
-        apply_filter = SourceModule(
-            open(CUDA_APPLY_KERNEL).read()).get_function('apply_kernel')
 
         for channel in rgb_channels:
             apply_filter(
@@ -42,8 +41,10 @@ def apply_color(img_array, kernel):
                 grid=(dim_grid_x, dim_grid_y),
             )
 
-        result_img_array[:, :, RED] = rgb_channels[RED]
-        result_img_array[:, :, GREEN] = rgb_channels[GREEN]
-        result_img_array[:, :, BLUE] = rgb_channels[BLUE]
+        result_img_array = np.empty_like(img_array)
+
+        result_img_array[:, :, 0] = rgb_channels[0]
+        result_img_array[:, :, 1] = rgb_channels[1]
+        result_img_array[:, :, 2] = rgb_channels[2]
 
         return result_img_array
