@@ -17,6 +17,10 @@ format:
 gaussian_kernel:
 	$(RUN) $(DIREXE)src/create_kernel.py
 
-gaussian: dirs gaussian_kernel
+gaussian: clean dirs gaussian_kernel
 	cp $(img) $(DIREXE)	
 	$(RUN) $(DIREXE)src/main.py --gaussian $(img)
+
+grayscale: clean dirs
+	cp $(img) $(DIREXE)	
+	$(RUN) $(DIREXE)src/main.py --grayscale $(img)

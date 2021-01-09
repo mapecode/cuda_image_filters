@@ -3,9 +3,9 @@ import math
 import pycuda.autoinit
 from pycuda import driver
 from pycuda.compiler import SourceModule
-from constants import *
+from definitions import *
 
-apply_filter = SourceModule(
+apply_gaussian_filter = SourceModule(
     open(CUDA_GAUSSIAN).read()).get_function(CUDA_GAUSSIAN_FUNCTION)
 
 
@@ -14,9 +14,9 @@ def apply(img_array, kernel):
         raise ValueError('Error, the image must be in RGB')
 
     rgb_channels = [
-        img_array[:, :, 0].copy(),
-        img_array[:, :, 1].copy(),
-        img_array[:, :, 2].copy(),
+        img_array[:, :, RED].copy(),
+        img_array[:, :, GREEN].copy(),
+        img_array[:, :, BLUE].copy(),
     ]
 
     height, width = img_array.shape[:2]
@@ -28,9 +28,8 @@ def apply(img_array, kernel):
         raise ValueError(
             'Error, maximum block number exceeded')
     else:
-
         for channel in rgb_channels:
-            apply_filter(
+            apply_gaussian_filter(
                 driver.In(channel),
                 driver.Out(channel),
                 np.uint32(width),
@@ -43,8 +42,8 @@ def apply(img_array, kernel):
 
         result_img_array = np.empty_like(img_array)
 
-        result_img_array[:, :, 0] = rgb_channels[0]
-        result_img_array[:, :, 1] = rgb_channels[1]
-        result_img_array[:, :, 2] = rgb_channels[2]
+        result_img_array[:, :, RED] = rgb_channels[RED]
+        result_img_array[:, :, GREEN] = rgb_channels[GREEN]
+        result_img_array[:, :, BLUE] = rgb_channels[BLUE]
 
         return result_img_array
