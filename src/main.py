@@ -1,5 +1,5 @@
 import sys
-import timeit
+import time
 import numpy as np
 import PIL.Image
 from argparse import ArgumentParser
@@ -45,11 +45,11 @@ if __name__ == '__main__':
             print('File Not Found')
             sys.exit(e)
 
-        start_time = timeit.default_timer()
+        start_time = time.time()
         result_img_array = gaussian.apply(img_array, kernel)
 
         print('Time apply gaussian filter:',
-              timeit.default_timer() - start_time, "s")
+              round(time.time() - start_time, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
     elif args.grayscale:
@@ -61,11 +61,11 @@ if __name__ == '__main__':
             print('File Not Found')
             sys.exit(e)
 
-        start_time = timeit.default_timer()
+        start_time = time.time()
         result_img_array = grayscale.apply(img_array)
 
         print('Time apply grayscale filter:',
-              timeit.default_timer() - start_time, "s")
+              round(time.time() - start_time, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
     elif args.blue:
@@ -77,10 +77,10 @@ if __name__ == '__main__':
             print('File Not Found')
             sys.exit(e)
 
-        start_time = timeit.default_timer()
+        start_time = time.time()
         result_img_array = blue.apply(img_array)
 
         print('Time apply blue filter:',
-              timeit.default_timer() - start_time, "s")
+              round(time.time() - start_time, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
