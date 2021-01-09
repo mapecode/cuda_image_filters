@@ -3,9 +3,7 @@ import cv2
 import numpy as np
 import PIL.Image
 from argparse import ArgumentParser
-from filters import gaussian
-from utils import create_gaussian_kernel
-from constants import KERNEL_FILE, RESULT_FILE
+from definitions import RESULT_FILE
 
 
 def parse_args():
@@ -19,6 +17,11 @@ def parse_args():
         help='gaussian blur filter',
         action='store_true'
     )
+    filter_group.add_argument(
+        '--grayscale',
+        help='grayscale filter',
+        action='store_true'
+    )
 
     return parser.parse_args()
 
@@ -27,6 +30,9 @@ if __name__ == '__main__':
     args = parse_args()
 
     if args.gaussian:
+        from filters import gaussian
+        from definitions import KERNEL_FILE
+
         try:
             img_array = np.array(PIL.Image.open(args.image_src))
             kernel = np.load(KERNEL_FILE)
@@ -36,4 +42,15 @@ if __name__ == '__main__':
 
         result_img_array = gaussian.apply(img_array, kernel)
 
+        PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
+    elif args.grayscale:
+        from filters import grayscale
+
+        try:
+            img_array = np.array(PIL.Image.open(args.image_src))
+        except FileNotFoundError as e:
+            print('File Not Found')
+            sys.exit(e)
+
+        result_img_array = grayscale.apply(img_array)
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
