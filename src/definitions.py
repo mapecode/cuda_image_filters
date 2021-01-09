@@ -1,6 +1,5 @@
 import pycuda.driver as drv
 
-
 drv.init()
 device = drv.Device(0)
 

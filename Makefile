@@ -6,7 +6,6 @@ RUN = python3.7
 clean:
 	rm -rf $(DIREXE)	
 
-
 dirs:
 	mkdir -p $(DIREXE)	
 	cp -r src/ $(DIREXE)
