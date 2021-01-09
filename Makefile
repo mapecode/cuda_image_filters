@@ -24,3 +24,7 @@ gaussian: clean dirs gaussian_kernel
 grayscale: clean dirs
 	cp $(img) $(DIREXE)	
 	$(RUN) $(DIREXE)src/main.py --grayscale $(img)
+
+blue: clean dirs
+	cp $(img) $(DIREXE)	
+	$(RUN) $(DIREXE)src/main.py --blue $(img)

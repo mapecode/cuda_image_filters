@@ -22,6 +22,11 @@ def parse_args():
         help='grayscale filter',
         action='store_true'
     )
+    filter_group.add_argument(
+        '--blue',
+        help='grayscale filter',
+        action='store_true'
+    )
 
     return parser.parse_args()
 
@@ -53,4 +58,15 @@ if __name__ == '__main__':
             sys.exit(e)
 
         result_img_array = grayscale.apply(img_array)
+        PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
+    elif args.blue:
+        from filters import blue
+
+        try:
+            img_array = np.array(PIL.Image.open(args.image_src))
+        except FileNotFoundError as e:
+            print('File Not Found')
+            sys.exit(e)
+
+        result_img_array = blue.apply(img_array)
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)

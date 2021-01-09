@@ -16,6 +16,8 @@ CUDA_GAUSSIAN = './cuda/gaussian.cu'
 CUDA_GAUSSIAN_FUNCTION = 'apply_gaussian'
 CUDA_GRAYSCALE = './cuda/grayscale.cu'
 CUDA_GRAYSCALE_FUNCTION = 'apply_grayscale'
+CUDA_BLUE = './cuda/blue.cu'
+CUDA_BLUE_FUNCTION = 'apply_blue'
 
 # Cuda
 DIM_BLOCK = 32
