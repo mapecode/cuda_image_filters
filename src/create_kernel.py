@@ -1,4 +1,5 @@
 import numpy as np
+import math
 from definitions import KERNEL_FILE, STANDARD_DEVIATION, FILTER_WIDTH
 
 
@@ -8,8 +9,8 @@ def create_gaussian_kernel():
 
     for i in range(-filter_half, filter_half+1):
         for j in range(-filter_half, filter_half+1):
-            matrix[i+filter_half, j + filter_half] = (1/2*np.pi*(
-                STANDARD_DEVIATION**2))*np.exp(-(i**2 + j**2)/(2 * STANDARD_DEVIATION**2))
+            matrix[i+filter_half, j + filter_half] = (1/math.sqrt(2*np.pi*(
+                STANDARD_DEVIATION)))*np.exp(-(i**2 + j**2)/(2 * STANDARD_DEVIATION**2))
 
     return matrix / matrix.sum()
 

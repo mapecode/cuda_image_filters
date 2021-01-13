@@ -49,7 +49,7 @@ if __name__ == '__main__':
         result_img_array = gaussian.apply(img_array, kernel)
 
         print('Time apply gaussian filter:',
-              round(time.time() - start_time, 3), "s")
+              round((time.time() - start_time)*10, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
     elif args.grayscale:
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         result_img_array = grayscale.apply(img_array)
 
         print('Time apply grayscale filter:',
-              round(time.time() - start_time, 3), "s")
+              round((time.time() - start_time)*10, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
     elif args.blue:
@@ -81,6 +81,6 @@ if __name__ == '__main__':
         result_img_array = blue.apply(img_array)
 
         print('Time apply blue filter:',
-              round(time.time() - start_time, 3), "s")
+              round((time.time() - start_time)*10, 3), "s")
 
         PIL.Image.fromarray(result_img_array).save(RESULT_FILE)
